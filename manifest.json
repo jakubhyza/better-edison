@@ -1,0 +1,21 @@
+{
+    "name": "Better Edison",
+    "version": "1.0.0",
+    "description": "Improvement for VŠB-TUO intraweb",
+    "manifest_version": 3,
+    "author": "Sára Hýžová",
+    "action":{
+        "default_popup": "popup.html",
+        "default_title": "Better Edison"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.vsb.cz/*"
+            ],
+            "js": [
+                "build/better-edison-bootstrap.js"
+            ]
+        }
+    ]
+}

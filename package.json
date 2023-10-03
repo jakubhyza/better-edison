@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "rollup": "^3.29.4",
+    "typescript": "^5.2.2"
+  },
+  "name": "better-edison",
+  "version": "1.0.0",
+  "description": "Improvement for VSB-TUO intranet",
+  "scripts": {
+    "prebuild": "tsc",
+    "build": "rollup out-tsc/src/index.js --file build/better-edison-bootstrap.js --format iife",
+    "postbuild": "rm -R out-tsc"
+  },
+  "author": "Sára Hýžová",
+  "license": "MIT",
+  "type": "module"
+}
