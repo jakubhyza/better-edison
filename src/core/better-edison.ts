@@ -5,6 +5,8 @@ export class BetterEdison {
     private edison: EdisonApiInstance;
     constructor() {
         this.edison = EdisonApi.createInstace();
-        this.edison.layout.headerVisibility(false);
+        this.edison.layout.setVisibility(false);
+
+        console.log(this.edison.page);
     }
 }

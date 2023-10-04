@@ -1,6 +1,8 @@
 export interface EdisonApiInstance {
     user: EdisonUser,
-    layout: LayoutApi,
+    page: EdisonPageInfo,
+    layout: EdisonLayoutApi,
+    menu: EdisonMenuItem[],
 }
 
 export interface EdisonUser {
@@ -10,5 +12,23 @@ export interface EdisonUser {
 }
 
 export interface EdisonLayoutApi {
-    headerVisibility: (visible: boolean) => void;
+    setVisibility: (visible: boolean) => void;
+}
+
+export interface EdisonMenuItem {
+    text: string;
+    href: string;
+    active: boolean;
+    items?: EdisonMenuItem[];
+}
+
+export interface EdisonPageInfo {
+    id: string;
+    visitor: string
+    url: string;
+    title: string;
+    locale: string
+    direction: string;
+    breadcrumb: string;
+    serverNode: string;
 }
