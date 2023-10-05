@@ -13,6 +13,7 @@ export interface EdisonUser {
 
 export interface EdisonLayoutApi {
     setVisibility: (visible: boolean) => void;
+    switchLocale: () => void;
 }
 
 export interface EdisonMenuItem {

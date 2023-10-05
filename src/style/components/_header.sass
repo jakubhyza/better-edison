@@ -7,3 +7,35 @@
 	justify-content: space-between
 	align-items: center
 	color: white
+
+	&__logout
+		margin-right: 1rem
+		background: lighten($secondary, 5%)
+		border: none
+		box-shadow: none
+		cursor: pointer
+		border-radius: 50%
+		width: 2.3rem
+		height: 2.3rem
+		display: flex
+		justify-content: center
+		align-items: center
+
+		&:hover
+			background: darken($secondary, 5%)
+
+	&__actions
+		display: flex
+		align-items: center
+
+	&__user-info
+		margin-right: 1rem
+		text-align: right
+		.login
+			font-size: 0.7rem
+			font-weight: 300
+		.username
+			font-weight: 600
+			font-size: 0.8rem
+
+

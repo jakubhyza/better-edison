@@ -4,6 +4,13 @@ import { BeSidebar } from "../components/sidebar.element";
 import { EdisonApiInstance, EdisonMenuItem } from "../types/edison-api-types";
 import { createComponent } from "./renderer";
 export function initLayout(beInstance: EdisonApiInstance) {
+
+	const materialIconsElement = createComponent('link', {
+		rel: 'stylesheet',
+		href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
+	}).getHtmlElement();
+	document.head.appendChild(materialIconsElement);
+
 	const headerWrapper = document.getElementById('overContent');
 	const headerAnchor = document.createElement('div');
 	headerAnchor.id = 'be-header';
@@ -11,7 +18,7 @@ export function initLayout(beInstance: EdisonApiInstance) {
 		headerWrapper.insertBefore(headerAnchor, headerWrapper.firstChild);
 	}
 
-	const headerComponent = createComponent(BeHeader, { user: beInstance.user }).getHtmlElement();
+	const headerComponent = createComponent(BeHeader, { user: beInstance.user, switchLanguage: beInstance.layout.switchLocale }).getHtmlElement();
 	headerAnchor.appendChild(headerComponent);
 
 	const contentWrapper = document.getElementById('overContent')?.parentElement;

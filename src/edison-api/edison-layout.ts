@@ -1,7 +1,10 @@
 import { EdisonMenuItem, EdisonPageInfo, EdisonUser } from "../types/edison-api-types";
 
-export function scrapUser(): EdisonUser {
+export function scrapUser(): EdisonUser | undefined {
     const usernameElement = document.querySelector('.unisUserName') as HTMLSpanElement;
+    if (!usernameElement) {
+        return;
+    }
     const [userLogin, userName] = usernameElement.innerText.split(", ");
 
     const logoutLinkElement = document.getElementById('logoutlinkSso') as HTMLLinkElement;
@@ -14,6 +17,10 @@ export function scrapUser(): EdisonUser {
             window.location.href = logoutLink;
         }
     }
+}
+
+export function scrapLocaleChangeLink(): string | undefined {
+    return document.querySelector('.unisActions ul')?.lastElementChild?.querySelector('a')?.href;
 }
 
 export function scrapPageInfo(): EdisonPageInfo | undefined {
@@ -91,7 +98,7 @@ export function scrapPrimaryMenuItems(): EdisonMenuItem[] {
     const homeLinkElement = document.querySelector('.wpthemeBranding a') as HTMLLinkElement | null;
     if (homeLinkElement) {
         menuItems.unshift({
-            text: 'Přehled',
+            text: scrapPageInfo()?.locale === 'cs' ? 'Přehled' : 'Overview',
             href: homeLinkElement.href,
             active: !menuItems.some(item => item.active)
         });
