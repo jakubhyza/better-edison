@@ -9,22 +9,18 @@
 			background-color: darken($secondary, 5%)
 			color: white
 			text-decoration: none
-		&.active.childless
-			background-color: $primary
+		&.active, &.active:hover
+			background-color: darken($primary, 3%)
 			&::after
 				content: ''
 				display: block
-				background: white
+				background: darken($secondary, 3%)
 				position: absolute
 				top: 0
 				right: 0
 				width: 1rem
 				height: 1rem
 				transform: translate(65%, 0.7rem) rotate(45deg)
-	&.active
-		background-color: lighten($secondary, 7%)
-	&.active &__subitem
-		background-color: darken($secondary, 2%)
 
 	&__subitem & a
 		padding-left: 2rem
@@ -33,4 +29,21 @@
 
 	&__subitem
 		a.be-menu-item__link.active
-			background-color: $primary
+			background-color: darken($primary, 3%)
+
+.be-sidebar
+	&:last-child
+		a.be-menu-item__link
+			&.active
+				&::after
+					background: white
+	&:first-child
+		a.be-menu-item__link
+			&.active, &.active:hover
+				background: $primary
+
+.be-sidebar--darken-arrow
+		a.be-menu-item__link
+			&.active
+				&::after, &:hover::after
+					background: darken($primary, 3%)

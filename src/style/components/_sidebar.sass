@@ -1,6 +1,7 @@
 .be-sidebar
 	min-width: 12.5rem
-	background: $secondary
+	width: max-content
+	background: linear-gradient(180deg, $secondary 0, $secondary 3rem, darken($secondary, 3%) 3rem, darken($secondary, 3%))
 	height: 100%
 	overflow: hidden auto
 	&__logo
@@ -10,3 +11,13 @@
 
 		img
 			height: 3.5rem
+
+			opacity: 0
+
+	&:first-child
+		background: $secondary
+	&:first-child &__logo img
+		opacity: 1
+
+#be-sidebar
+	display: flex
