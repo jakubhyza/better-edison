@@ -21,17 +21,40 @@ export function scrapPageInfo(): EdisonPageInfo | undefined {
     if (!infoContainer) {
         return undefined;
     }
-    // TODO: Tečky v názvech tříd dělají problémy
-    return {
-        id: infoContainer.querySelector('asa.page.id')?.innerHTML ?? '',
-        visitor: infoContainer.querySelector('asa.visitor')?.innerHTML ?? '',
-        url: infoContainer.querySelector('asa.url')?.innerHTML ?? '',
-        title: infoContainer.querySelector('asa.page.title')?.innerHTML ?? '',
-        locale: infoContainer.querySelector('asa.page.locale')?.innerHTML ?? '',
-        direction: infoContainer.querySelector('asa.page.direction')?.innerHTML ?? '',
-        breadcrumb: infoContainer.querySelector('asa.page.breadcrumb')?.innerHTML ?? '',
-        serverNode: infoContainer.querySelector('asa.page.cit.serverNode')?.innerHTML ?? '',
-    }
+
+    const valueMap: Record<string, string> = {
+        'asa.page.id': 'id',
+        'asa.visitor': 'visitor',
+        'asa.url': 'url',
+        'asa.page.title': 'title',
+        'asa.page.locale': 'locale',
+        'asa.page.direction': 'direction',
+        'asa.page.breadcrumb': 'breadcrumb',
+        'asa.page.cit.serverNode': 'serverNode',
+
+    };
+    const info = {
+        id:   '',
+        visitor: '',
+        url: '',
+        title: '',
+        locale: '',
+        direction: '',
+        breadcrumb: '',
+        serverNode: '',
+    };
+
+    Array.from(infoContainer.children).forEach((node) => {
+        const key = (node as HTMLSpanElement).getAttribute('class');
+        const value = (node as HTMLSpanElement).innerHTML;
+        if (key && value) {
+            const mappedKey = valueMap[key];
+            if (mappedKey) {
+                info[mappedKey as keyof typeof info] = value;
+            }
+        }
+    });
+    return info;
 }
 
 export function scrapAllMenuItems(): EdisonMenuItem[] {

@@ -14,7 +14,10 @@
                 "https://*.vsb.cz/*"
             ],
             "js": [
-                "build/better-edison-bootstrap.js"
+                "better-edison-bootstrap.js"
+            ],
+            "css": [
+                "main.css"
             ]
         }
     ]

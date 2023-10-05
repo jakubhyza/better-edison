@@ -1,15 +1,19 @@
 {
   "dependencies": {
     "rollup": "^3.29.4",
+    "sass": "^1.68.0",
     "typescript": "^5.2.2"
   },
   "name": "better-edison",
   "version": "1.0.0",
   "description": "Improvement for VSB-TUO intranet",
   "scripts": {
-    "prebuild": "tsc",
-    "build": "rollup out-tsc/src/index.js --file build/better-edison-bootstrap.js --format iife",
-    "postbuild": "rm -R out-tsc"
+    "prebuild": "rm -R build",
+    "build": "npm run build:public && npm run build:scripts && npm run build:styles",
+    "build:public": "cp -R src/public build",
+    "build:scripts": "tsc && rollup build/temp-ts/src/index.js --file build/better-edison-bootstrap.js --format iife",
+    "build:styles": "sass src/style:build",
+    "postbuild": "rm -R build/temp-ts"
   },
   "author": "Sára Hýžová",
   "license": "MIT",

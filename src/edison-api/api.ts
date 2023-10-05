@@ -12,6 +12,9 @@ export const EdisonApi = {
         if (!pageInfo) {
             throw new Error("Page info not found");
         }
+        if (["/wps/myportal/home"].includes(pageInfo.url)) {
+            throw new Error("Whitelisted page");
+        }
 
         return {
             user: scrapUser(),

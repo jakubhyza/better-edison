@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2018",                          
+    "target": "es2018",
     "module": "esnext",
-    "moduleResolution": "node",                     
+    "moduleResolution": "node",
     "noEmitOnError": true,
-    "lib": ["es2017", "DOM"],                            
-    "strict": true,  
-    "esModuleInterop": false,                 
-    "outDir": "out-tsc",
+    "lib": ["es2017", "DOM"],
+    "strict": true,
+    "esModuleInterop": false,
+    "outDir": "build/temp-ts",
     "rootDir": "./"
   }
   ,
