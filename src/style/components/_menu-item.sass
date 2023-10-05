@@ -1,0 +1,30 @@
+.be-menu-item
+	a.be-menu-item__link
+		display: block
+		padding: .7rem 1.2rem
+		color: white
+		text-decoration: none
+		position: relative
+		&:hover, &:focus
+			background-color: darken($secondary, 5%)
+			color: white
+			text-decoration: none
+		&.active.childless
+			background-color: $primary
+			&::after
+				content: ''
+				display: block
+				background: white
+				position: absolute
+				top: 0
+				right: 0
+				width: 1rem
+				height: 1rem
+				transform: translate(65%, 0.7rem) rotate(45deg)
+	&.active
+		background-color: lighten($secondary, 7%)
+	&.active &__subitem
+		background-color: darken($secondary, 2%)
+
+	&__subitem & a
+		padding-left: 2rem

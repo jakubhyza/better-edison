@@ -7,13 +7,13 @@ import {
 } from "./edison-layout";
 
 export const EdisonApi = {
-    createInstace: (): EdisonApiInstance => {
+    createInstace: (): EdisonApiInstance | undefined => {
         const pageInfo = scrapPageInfo();
         if (!pageInfo) {
-            throw new Error("Page info not found");
+            return;
         }
         if (["/wps/myportal/home"].includes(pageInfo.url)) {
-            throw new Error("Whitelisted page");
+            return;
         }
 
         return {

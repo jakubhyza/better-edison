@@ -13,7 +13,9 @@
     "build:public": "cp -R src/public build",
     "build:scripts": "tsc && rollup build/temp-ts/src/index.js --file build/better-edison-bootstrap.js --format iife",
     "build:styles": "sass src/style:build",
-    "postbuild": "rm -R build/temp-ts"
+    "postbuild": "rm -R build/temp-ts",
+
+    "dev:styles": "sass --watch src/style:build"
   },
   "author": "Sára Hýžová",
   "license": "MIT",

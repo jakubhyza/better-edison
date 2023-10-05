@@ -18,7 +18,19 @@
             ],
             "css": [
                 "main.css"
-            ]
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "img/*"
+            ],
+            "matches": [
+                "https://*.vsb.cz/*"
+            ],
+            "use_dynamic_url": true
         }
     ]
 }
