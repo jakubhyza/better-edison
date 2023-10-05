@@ -9,7 +9,9 @@ export function initLayout(beInstance: EdisonApiInstance) {
 	if (headerWrapper) {
 		headerWrapper.insertBefore(headerAnchor, headerWrapper.firstChild);
 	}
-	headerAnchor.innerHTML = BeHeader({}, 'Header');
+	headerAnchor.innerHTML = BeHeader({
+		user: beInstance.user,
+	}, 'Header');
 
 	const contentWrapper = document.getElementById('overContent')?.parentElement;
 	contentWrapper?.classList.add('be-content-wrapper');
@@ -18,4 +20,6 @@ export function initLayout(beInstance: EdisonApiInstance) {
 	contentWrapper?.insertBefore(sidebar, contentWrapper.firstChild);
 
 	sidebar.innerHTML = BeSidebar({}, beInstance.menu.map(item => BeMenuItem(item)).join(''));
+
+	document.getElementById('be-logout-button')?.addEventListener('click', beInstance.user.logout);
 }

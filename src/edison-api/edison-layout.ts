@@ -87,24 +87,47 @@ export function scrapPrimaryMenuItems(): EdisonMenuItem[] {
             active,
         });
     });
+
+    const homeLinkElement = document.querySelector('.wpthemeBranding a') as HTMLLinkElement | null;
+    if (homeLinkElement) {
+        menuItems.unshift({
+            text: 'Přehled',
+            href: homeLinkElement.href,
+            active: !menuItems.some(item => item.active)
+        });
+    }
     return menuItems;
 }
 
 export function scrapSecondaryMenuItems(): EdisonMenuItem[] {
-    const menuItemElements = document.querySelectorAll("#sideNav a");
+    const menuItemElements = document.querySelectorAll("#sideNav > ul > li");
     if (!menuItemElements) return [];
 
     const menuItems: EdisonMenuItem[] = [];
     menuItemElements.forEach((itemElement) => {
-        const linkElement = itemElement as HTMLLinkElement;
+        const linkElement = itemElement.firstElementChild?.querySelector('a') as HTMLLinkElement | undefined | null;
+        if (!linkElement) return;
+
         const href = linkElement.href;
         const text = linkElement.innerText;
         const active = linkElement.classList.contains("wpthemeSelected");
+
+
+        const childItems: EdisonMenuItem[] = []
+        itemElement.querySelectorAll('ul ul li a').forEach(childElement => {
+            const childLinkElement = childElement as HTMLLinkElement;
+            childItems.push({
+                href: childLinkElement.href,
+                text: childLinkElement.innerText,
+                active: childLinkElement.classList.contains("wpthemeSelected"),
+            });
+        });
 
         menuItems.push({
             text,
             href,
             active,
+            items: childItems,
         });
     });
     return menuItems;
