@@ -1,13 +1,15 @@
+import { createComponent } from "../core/renderer";
 import { EdisonMenuItem } from "../types/edison-api-types";
+import { RenderableComponent } from "../types/renderable";
 import { safe_tags } from "../utils/escape-html";
-import { nativeElement } from "./native.element";
 
-export function BeMenuItem(props: EdisonMenuItem, children: string = ''): string {
-	return nativeElement('div', { class: `be-menu-item ${props.active ? 'active' : ''}` }, [
-			nativeElement('a', { href: props.href, class: `be-menu-item__link ${props.active ? 'active' : ''} ${!props.items || props.items.length == 0 ? 'childless' : 'with-child'}` }, safe_tags(props.text)),
-			(!props.items ? '' : props.items.map(subitem => {
-				return nativeElement('div', { class: 'be-menu-item__subitem' }, BeMenuItem(subitem));
-			}).join('')),
-		].join(''),
+export function BeMenuItem(props: EdisonMenuItem, children: string = ''): RenderableComponent {
+	return createComponent('div', { class: `be-menu-item ${props.active ? 'active' : ''}` },
+		createComponent('a', { href: props.href, class: `be-menu-item__link ${props.active ? 'active' : ''} ${!props.items || props.items.length == 0 ? 'childless' : 'with-child'}`}, props.text),
+		...(!props.items ? []: props.items.map(subitem => {
+			return createComponent('div', { class: 'be-menu-item__subitem' },
+				createComponent(BeMenuItem, subitem)
+			);
+		}))
 	);
 }

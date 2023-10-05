@@ -1,20 +1,18 @@
+import { createComponent } from '../core/renderer';
 import { getResourceUrl } from '../core/resource-manager';
-import { nativeElement } from './native.element';
+import { RenderableChildren, RenderableComponent } from '../types/renderable';
 
 type SidebarProps = {
-
+	children: RenderableChildren[];
 }
 
-function render(props: SidebarProps, children: string = ''): string {
+export function BeSidebar(props: SidebarProps): RenderableComponent {
 	const img = getResourceUrl('img/be-logo.svg');
-	return `
-		<div class="be-sidebar">
-			<div class="be-sidebar__logo">
-				${nativeElement('img', { src: img, alt: 'Better Edison Logo'})}
-			</div>
-			${children}
-		</div>
-	`;
+	return createComponent('div', { class: 'be-sidebar' },
+		createComponent('div', { class: 'be-sidebar__logo' },
+			createComponent('img', { src: img, alt: 'Better Edison Logo'})
+		),
+		...props.children
+	);
 }
 
-export { render as BeSidebar }
