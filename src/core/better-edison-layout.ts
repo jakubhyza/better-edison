@@ -62,7 +62,7 @@ export function initLayout(beInstance: EdisonApiInstance) {
 		}
 	}
 
-
+	document.body.classList.add('be-loaded');
 
 	//document.getElementById('be-logout-button')?.addEventListener('click', beInstance.user.logout);
 }
