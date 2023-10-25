@@ -64,7 +64,7 @@ export function MySheduleBePlugin(beInstance: BetterEdison) {
 
             displayLine.style.left = (cellRect.left + positionInSegment) + 'px';
             displayLine.style.top = cellRect.top + 'px';
-            displayLine.style.opacity = '0';
+            displayLine.style.opacity = '1';
 
             const dateNow = new Date();
             const hours = dateNow.getHours();
