@@ -11,7 +11,7 @@ export function MySheduleBePlugin(beInstance: BetterEdison) {
 
     beInstance.queryItems('.schedTable.mySchedTable', timeTable => {
         // Init time segments
-        const timeTableRows = Array.from(timeTable.querySelectorAll('tbody > tr'));
+        const timeTableRows = Array.from(timeTable.firstElementChild?.children || []);
         const timeCells = Array.from(timeTableRows[0].children);
         const timeSegments: TimeSegment[] = [];
         timeCells.forEach((element, i) => {
@@ -43,17 +43,29 @@ export function MySheduleBePlugin(beInstance: BetterEdison) {
         // Init line
         const rect = timeTable.getBoundingClientRect();
         const displayLine = document.createElement('div');
-        timeTable.appendChild(displayLine);
+        timeTable.parentElement?.appendChild(displayLine);
         displayLine.classList.add('be-timetable-line');
         displayLine.style.height = rect.height + 'px';
-        
+
         // Init position update
         const updatePosition = () => {
+            const dateNow = new Date();
+            const hours = dateNow.getHours();
+            const minutes = dateNow.getMinutes();
+            displayLine.setAttribute('data-time-label', `${hours}:${minutes < 10 ? '0' : ''}${minutes}`);
+
             const time = Date.now();
             const activeSegment = timeSegments.find(segment => segment.from <= time && segment.to >= time);
             if (!activeSegment) {
-                // TODO: No active segment
-                displayLine.style.opacity = '0.2';
+                const nextSegment = timeSegments.find(segment => segment.from > time);
+                if (!nextSegment) {
+                    displayLine.style.opacity = '0';
+                    return;
+                }
+                const cellRect = nextSegment.cell.getBoundingClientRect();
+                displayLine.style.left = (cellRect.left + window.scrollX) + 'px';
+                displayLine.style.top = (cellRect.top + window.screenY) + 'px';
+                displayLine.style.opacity = '0.5';
                 return;
             }
 
@@ -62,16 +74,14 @@ export function MySheduleBePlugin(beInstance: BetterEdison) {
             const segmentLength = activeSegment.to - activeSegment.from;
             const positionInSegment = cellRect.width * timeInSegment / segmentLength;
 
-            displayLine.style.left = (cellRect.left + positionInSegment) + 'px';
-            displayLine.style.top = cellRect.top + 'px';
+            displayLine.style.left = (cellRect.left + positionInSegment + window.scrollX) + 'px';
+            displayLine.style.top = (cellRect.top + window.scrollY) + 'px';
             displayLine.style.opacity = '1';
 
-            const dateNow = new Date();
-            const hours = dateNow.getHours();
-            const minutes = dateNow.getMinutes();
-            displayLine.setAttribute('data-time-label', `${hours}:${minutes < 10 ? '0' : ''}${minutes}`);
+
         }
         setInterval(updatePosition, 1000);
+        window.addEventListener('resize', updatePosition);
         updatePosition();
     });
 }
