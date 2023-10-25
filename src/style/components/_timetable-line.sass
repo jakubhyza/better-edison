@@ -1,0 +1,14 @@
+.be-timetable-line
+    background-color: #f00
+    width: 1px
+    position: absolute
+
+    &::before
+        content: attr(data-time-label)
+        display: block
+        padding: .2rem .5rem
+        background-color: #f00
+        width: fit-content
+        color: #fff
+        transform: translate(-50%, -100%)
+        border-radius: 5px
