@@ -6,11 +6,27 @@ interface TimeSegment {
     cell: HTMLElement;
 }
 
+
 export function MySheduleBePlugin(beInstance: BetterEdison) {
     if (!beInstance.isEdison) return;
+    if (!location.href.includes('student/rozvrh/rozvrh')) return;
 
+    // Reskin cells
+    beInstance.queryItems('.schedTable.mySchedTable > tbody > tr > td > table', tableCell => {
+        console.log(tableCell);
+        tableCell.parentElement!.style.padding = '0.2rem';
+        tableCell.classList.add('be-timetable-cell');
+        tableCell.querySelectorAll('a').forEach(a => {
+            if (a.href.includes('rozvrh.vsb.cz')) {
+                a.setAttribute('onclick', "showHref(this, 'Rozvrh předmětu', '1300px', '500px'); return false;");
+            }
+        });
+    });
+
+    // Timeline
     beInstance.queryItems('.schedTable.mySchedTable', timeTable => {
         // Init time segments
+        timeTable.classList.add('be-timetable');
         const timeTableRows = Array.from(timeTable.firstElementChild?.children || []);
         const timeCells = Array.from(timeTableRows[0].children);
         const timeSegments: TimeSegment[] = [];

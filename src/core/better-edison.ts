@@ -14,7 +14,10 @@ export class BetterEdison {
         console.log(`------------------------\n[Better Edison]\ndev 0.1\n------------------------`)
 
         this.edison.layout.setVisibility(false);
-        initLayout(this.edison);
+
+        if (!location.search.includes('be-layout=false')) {
+            initLayout(this.edison);
+        }
     }
 
     get isEdison(): boolean {
@@ -28,5 +31,5 @@ export class BetterEdison {
     queryItems(querySelector: string, cb: (element: HTMLElement) => void) {
         const items = document.querySelectorAll(querySelector);
         items.forEach(e => cb(e as HTMLElement));
-    }    
+    }
 }

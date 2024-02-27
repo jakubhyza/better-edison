@@ -1,0 +1,23 @@
+.be-timetable
+	.schedLecture
+		--cell-color: red
+	.schedPractice
+		--cell-color: blue
+
+	table.be-timetable-cell
+		border: none
+		border-left: 2px solid var(--cell-color)
+		box-shadow: 0.05rem 0.05rem 0.5rem rgb(0 0 0 / 40%)
+
+		&:hover
+			box-shadow: 0.05rem 0.05rem 0.5rem rgb(0 0 0 / 60%)
+
+	table.be-timetable-cell.others
+		border: none
+		border-left: 2px dotted var(--cell-color)
+
+	&.schedTable.mySchedTable
+		width: 100%
+
+	&.schedTable.mySchedTable TD
+		border: none
