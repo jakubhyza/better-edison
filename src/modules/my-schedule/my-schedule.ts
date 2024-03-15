@@ -13,13 +13,45 @@ export function MySheduleBePlugin(beInstance: BetterEdison) {
 
     // Reskin cells
     beInstance.queryItems('.schedTable.mySchedTable > tbody > tr > td > table', tableCell => {
-        console.log(tableCell);
         tableCell.parentElement!.style.padding = '0.2rem';
         tableCell.classList.add('be-timetable-cell');
         tableCell.querySelectorAll('a').forEach(a => {
             if (a.href.includes('rozvrh.vsb.cz')) {
                 a.setAttribute('onclick', "showHref(this, 'Rozvrh předmětu', '1300px', '500px'); return false;");
             }
+        });
+    });
+
+    // Day stripes
+    beInstance.queryItems('.schedTable.mySchedTable > tbody', (timetable) => {
+        const day = new Date().getDay();
+        let dayIndex = 0;
+        let isFirstInDay = false;
+
+        Array.from(timetable.children).forEach((row) => {
+            const rowElement = row as HTMLElement;
+            const isBreak = rowElement.childElementCount === 1 && rowElement.firstElementChild?.classList?.contains('dayBreak');
+            if (isBreak) {
+                dayIndex++;
+                isFirstInDay = true;
+                return;
+            }
+
+            if (dayIndex % 2 === 0) {
+                rowElement.style.backgroundColor = '#f7f7f7';
+            }
+            if (dayIndex % 2 === 0 && isFirstInDay) {
+                (rowElement.firstElementChild as HTMLElement).style.backgroundColor = '#8c8c8c';
+            }
+
+            if (dayIndex === day) {
+                rowElement.style.backgroundColor = '#c2e9e7';
+            }
+            if (dayIndex === day && isFirstInDay) {
+                (rowElement.firstElementChild as HTMLElement).style.backgroundColor = '#00958b';
+            }
+
+            isFirstInDay = false;
         });
     });
 
